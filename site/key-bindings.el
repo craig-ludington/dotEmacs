@@ -33,11 +33,10 @@
 				           (revert-buffer nil :no-confirm)
 				           (message "Reverted: %s" buffer-file-name))))
 
-(global-set-key (kbd "H-<right>")   'shrink-window-horizontally)
+(global-set-key (kbd "H-<right>")   (lambda () (interactive) (shrink-window-horizontally -1)))
+(global-set-key (kbd "H-<up>")      (lambda () (interactive) (shrink-window -1)))
 (global-set-key (kbd "H-<left>")    'shrink-window-horizontally)
-(global-set-key (kbd "H-<up>")      'shrink-window)
 (global-set-key (kbd "H-<down>")    'shrink-window)
 
 
 (add-hook 'yaml-mode-hook '(lambda () (define-key yaml-mode-map (kbd "C-c C-p") 'yaml-path/path)))
-
