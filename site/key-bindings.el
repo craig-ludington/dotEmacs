@@ -40,3 +40,5 @@
 
 
 (add-hook 'yaml-mode-hook '(lambda () (define-key yaml-mode-map (kbd "C-c C-p") 'yaml-path/path)))
+
+(global-set-key (kbd "C-c r")    'me.alpheus/browser/remote-open)
