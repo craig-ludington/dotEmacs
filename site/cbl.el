@@ -38,3 +38,8 @@ Bugs: if you want to skip a column, you have to insert something, or press C-g."
   (interactive)
   (insert "require 'pry'; Pry.config.color = false; Pry.config.pager = false; binding.pry; # FIXME!!! DO NOT COMMIT"))
 
+
+(labels ((x (f n)
+            (set-face-attribute 'default nil :height (funcall f (* n (face-attribute 'default :height))))))
+  (defun cbl/font-size/increase () (interactive) (x 'ceiling 1.10))
+  (defun cbl/font-size/decrease () (interactive) (x 'floor   0.90)))

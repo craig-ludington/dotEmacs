@@ -43,3 +43,12 @@
 
 (add-hook 'yaml-mode-hook '(lambda () (define-key yaml-mode-map (kbd "C-c C-p") 'yaml-path/path)))
 
+(when (boundp 'key-chord-mode)
+  (key-chord-define ruby-mode-map "[]" ;; #{} inside strings
+		    (lambda ()
+		      (interactive)
+		      (if (equal 'font-lock-string-face (face-at-point))
+			  (progn (insert "#{}")
+				 (backward-char))
+			(insert "[]"))))
+  )
