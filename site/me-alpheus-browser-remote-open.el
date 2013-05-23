@@ -59,9 +59,18 @@
 
 (defun me.alpheus/browser/remote-open ()
   (interactive)
-  (shell-command (format "ssh %s '%s %s'" 
-			 me.alpheus/browser/remote-host
-			 me.alpheus/browser/remote-open-command
-			 (thing-at-point 'url))))
+  (let* ((url (thing-at-point 'url))
+	 (cmd (and url (format "ssh %s '%s %s'" 
+			       me.alpheus/browser/remote-host
+			       me.alpheus/browser/remote-open-command
+			       url)))
+	 (result (and cmd (shell-command cmd)))
+	 (msg (if result
+		  (format "%s -- %s." cmd (if (zerop result)
+					    "succeeded"
+					   "failed"))
+		"No URL at point.")))
+    (message msg)))
 
 (provide 'me-alpheus-browser-remote-open)
+

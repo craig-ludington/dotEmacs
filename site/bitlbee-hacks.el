@@ -1,3 +1,7 @@
+;; Create a chat group
+;; /msg &bitlbee join_chat 0 junky@conference.cashnetusa.com #junky
+;; /invite esambo #junky
+;; 
 
 (defun cbl/erc/bitlbee-privmsg (target message)
   "Send a privmsg to the current channel's default target."
@@ -23,7 +27,7 @@
 
 (defun cbl/erc/join-bitlbee-channels ()
   (interactive)
-  (dolist (channel '("dev" "qa" "db" "the_blob" "incorrect_extension_amount"))
+  (dolist (channel '("dev" "db" "trolls"))
       (cbl/erc/join-bitlbee-channel channel)))
 
 (defun cbl/erc/format-buffer-major-mode ()
