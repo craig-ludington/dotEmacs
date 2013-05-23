@@ -51,4 +51,11 @@
 			  (progn (insert "#{}")
 				 (backward-char))
 			(insert "[]"))))
+
+  ;; Bookmarks
+  (key-chord-define-global "bt" 'bm-toggle)
+  (key-chord-define-global "bn" 'bm-next)
+  (key-chord-define-global "bp" 'bm-previous)
+  (key-chord-define-global "bs" 'bm-show-all)
+  (key-chord-define-global "ba" 'bm-bookmark-annotate)
   )

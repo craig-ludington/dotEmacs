@@ -6,6 +6,6 @@
   (interactive)
   (run-ruby "~/bin/script-console-integration"))
 
-(defun script-console ()
-  (interactive)
-  (run-ruby "~/bin/script-console"))
+(defun script-console (args)
+  (interactive "MExtra args: ")
+  (run-ruby (format "~/bin/script-console %s" (or args ""))))
