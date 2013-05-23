@@ -55,3 +55,21 @@ If the current line is preceeded by an SSH command, execute that first (to set u
 	))))
 
 (provide 'cbl-psql)
+
+;; Options available through the \pset command:
+;;
+;; |----------------------+-------------+------------------------------|
+;; | Format               | Parameter   | Options                      |
+;; |----------------------+-------------+------------------------------|
+;; | Field alignment      | format      | unaligned aligned html latex |
+;; | Field separator      | fieldsep    | separator                    |
+;; | One field per line   | expanded    |                              |
+;; | Rows only            | tuples_only |                              |
+;; | Row separator        | recordsep   | separator                    |
+;; | Table title          | title       | tibtle                       |
+;; | Table border         | border      | 0 1 2                        |
+;; | Display NULL  values | null        | null_string                  |
+;; | HTML table tags      | tableattr   | tags                         |
+;; | Page output          | pager       | command                      |
+;; |----------------------+-------------+------------------------------|
+
