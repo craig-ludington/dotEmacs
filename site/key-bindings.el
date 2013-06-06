@@ -58,4 +58,6 @@
   (key-chord-define-global "bp" 'bm-previous)
   (key-chord-define-global "bs" 'bm-show-all)
   (key-chord-define-global "ba" 'bm-bookmark-annotate)
+
+  (key-chord-define-global "fj" 'switch-window)
   )
