@@ -57,20 +57,19 @@
   "This host displays a URI for `me.alpheus/browser/remote-open'."
   :type 'string)
 
+(defun me.alpheus/browser/private/remote-open (url)
+  (shell-command (format "ssh %s '%s %s'" 
+                         me.alpheus/browser/remote-host
+                         me.alpheus/browser/remote-open-command
+                         url)))
+
 (defun me.alpheus/browser/remote-open ()
   (interactive)
-  (let* ((url (thing-at-point 'url))
-	 (cmd (and url (format "ssh %s '%s %s'" 
-			       me.alpheus/browser/remote-host
-			       me.alpheus/browser/remote-open-command
-			       url)))
-	 (result (and cmd (shell-command cmd)))
-	 (msg (if result
-		  (format "%s -- %s." cmd (if (zerop result)
-					    "succeeded"
-					   "failed"))
-		"No URL at point.")))
-    (message msg)))
+  (me.alpheus/browser/private/remote-open (thing-at-point 'url)))
+
+(defun me.alpheus/browser/find-file-at-point (url &optional ignored)
+  (interactive)
+  (me.alpheus/browser/private/remote-open url))
 
 (provide 'me-alpheus-browser-remote-open)
 
