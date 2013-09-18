@@ -14,7 +14,9 @@
   (buffer-substring-no-properties (point-at-bol) (point-at-eol)))
 
 (defun cbl/get-previous-line ()
-  (save-excursion (previous-line) (cbl/get-current-line)))
+  "Return the text of the previous line as a string. or nil if on the first line in the buffer"
+  (save-excursion (if (< -1 (forward-line -1))
+		      (cbl/get-current-line))))
 
 (defun cbl/text/indent-matching ()
   "Insert enough spaces to indent to the next column.  The next column is based on the previous line,

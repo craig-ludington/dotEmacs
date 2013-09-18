@@ -3,7 +3,8 @@
 
 (defun cbl/psql/get-tunnel-command ()
   (let ((s (cbl/get-previous-line)))
-    (and (string-match-p "^# ssh " s)
+    (and s
+	 (string-match-p "^# ssh " s)
 	 (substring s 2))))
 
 (defun cbl/psql-from-spec (spec)
