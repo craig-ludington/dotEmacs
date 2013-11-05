@@ -20,8 +20,15 @@
 	(save name)))))
 
 (defun me.alpheus/window/restore ()
-  "Prompt for a window configuration to restore, the IDO way."
+  "Prompt for a window configuration to restore."
   (interactive)
   (let* ((name     (ido-completing-read "Switch to: " (mapcar 'car *me.alpheus/window/register-map*)))
 	 (register (cdr (assoc name *me.alpheus/window/register-map*)) ))
     (jump-to-register register)))
+
+(defun me.alpheus/window/remove ()
+  "Prompt for a window configuration to remove."
+  (interactive)
+  (let ((name (ido-completing-read "Remove: " (mapcar 'car *me.alpheus/window/register-map*))))
+    (setq *me.alpheus/window/register-map*
+	  (remove (assoc name *me.alpheus/window/register-map*) *me.alpheus/window/register-map*))))
