@@ -59,5 +59,10 @@
   (key-chord-define-global "bs" 'bm-show-all)
   (key-chord-define-global "ba" 'bm-bookmark-annotate)
 
+  (when (boundp '*me.alpheus/window/register-map*)
+    (key-chord-define-global "ws" 'me.alpheus/window/save)
+    (key-chord-define-global "wr" 'me.alpheus/window/restore)
+    (key-chord-define-global "wk" 'me.alpheus/window/remove))
+
   (key-chord-define-global "fj" 'switch-window)
   )
