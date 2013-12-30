@@ -46,6 +46,20 @@ Bugs: if you want to skip a column, you have to insert something, or press C-g."
   (defun cbl/font-size/increase () (interactive) (x 'ceiling 1.10))
   (defun cbl/font-size/decrease () (interactive) (x 'floor   0.90)))
 
+(defun cbl/highlight-region (begin end)
+  (interactive "r")
+  (let ((face (hi-lock-read-face-name))
+	(overlay (make-overlay begin end)))
+    (overlay-put overlay 'highlight-region-overlay t)
+    (overlay-put overlay 'face face))
+  (set-mark-command (point)))
+
+(defun cbl/unhighlight-region (begin end)
+  (interactive "r")
+  (let ((face (hi-lock-read-face-name)))
+    (remove-overlays (or begin (point-min)) (or end (point-max)) 'face face))
+  (set-mark-command (point)))
+
 (defun cbl/ruby/insert-commas-as-necessary ()
   "Insert commas after every item in an array or parenthesized list, or after every key/value pair in a hash.
 If there's a superfluous comma after the last item (or key/value pair) that comma will be deleted."

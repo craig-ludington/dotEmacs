@@ -13,7 +13,7 @@
      slavedb.cashnetusa.com:5432:cnuapp_prod:cludington:SeKrIt 
    Sets sql-buffer for sql-send-region to use."
   (multiple-value-bind (host port db user _) (split-string spec ":")
-    (let ((buf (make-comint (format "PSQL %s@%s" db host) "/usr/bin/psql" nil "-U" user "-h" host "-p" port "--pset" "pager=off" db)))
+    (let ((buf (make-comint (format "PSQL %s@%s" db host) "/usr/local/bin/psql" nil "-U" user "-h" host "-p" port "--pset" "pager=off" db)))
       ;; sql-buffer is defined in sql.el -- shadowed by buffer-local variables in sql-mode
       (setq sql-buffer buf) 
       (switch-to-buffer buf))))
@@ -48,7 +48,7 @@ If the current line is preceeded by an SSH command, execute that first (to set u
      slavedb.cashnetusa.com:5432:cnuapp_prod:cludington:SeKrIt 
    Sets sql-buffer for sql-send-region to use."
   (multiple-value-bind (host port db user _) (split-string spec ":")
-    (let ((buf (make-comint (format "PSQL %s@%s" db host) "/usr/bin/psql" nil "-U" user "-h" host "-p" port "--pset" "pager=off" db)))
+    (let ((buf (make-comint (format "PSQL %s@%s" db host) "/usr/local/bin/psql" nil "-U" user "-h" host "-p" port "--pset" "pager=off" db)))
       (with-current-buffer buf
 	(comint-send-input "\\t")
 	(comint-send-input "\\a")

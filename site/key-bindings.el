@@ -64,5 +64,7 @@
     (key-chord-define-global "wr" 'me.alpheus/window/restore)
     (key-chord-define-global "wk" 'me.alpheus/window/remove))
 
+  (key-chord-define-global "rh" 'cbl/highlight-region)
+
   (key-chord-define-global "fj" 'switch-window)
   )
