@@ -19,7 +19,7 @@
      gofmt-before-save)))
  '(bm-cycle-all-buffers t)
  '(cider-cljs-lein-repl
-   "(do (require 'weasel.repl.websocket) (cemerick.piggieback/cljs-repl (weasel.repl.websocket/repl-env :ip \"127.0.0.1\" :port 9001)))")
+   "(do (use 'figwheel-sidecar.repl-api) (start-figwheel!) (cljs-repl))")
  '(cider-lein-command "~/bin/lein")
  '(cider-repl-display-help-banner nil)
  '(cider-repl-history-file "~/.cider-repl-history")
@@ -27,6 +27,9 @@
  '(cider-repl-use-pretty-printing nil)
  '(clean-buffer-list-delay-special 60)
  '(clean-buffer-list-kill-regexps (quote (".asc$" ".gpg$")))
+ '(custom-safe-themes
+   (quote
+    ("dd2346baba899fa7eee2bba4936cfcdf30ca55cdc2df0a1a4c9808320c4d4b22" default)))
  '(dired-listing-switches "-l")
  '(edconf-exec-path
    "~/src/ncms/src/client/node_modules/editorconfig/bin/editorconfig")
@@ -85,7 +88,7 @@
  '(me\.alpheus/find-file-in-project-program "find ~/go_appengine/gopath/src -name \\*.go")
  '(me\.alpheus/gotags-tags-file "~/go_appengine/GOTAGS")
  '(me\.alpheus/remote-clipboard/host "craigl@roshi")
- '(midnight-mode t nil (midnight))
+ '(midnight-mode nil nil (midnight))
  '(ns-alternate-modifier (quote super))
  '(ns-command-modifier (quote meta))
  '(ns-right-alternate-modifier (quote alt))
@@ -95,22 +98,32 @@
     (("gnu" . "http://elpa.gnu.org/packages/")
      ("melpa" . "http://melpa.milkbox.net/packages/")
      ("melpa-stable" . "http://melpa-stable.milkbox.net/packages/"))))
+ '(package-selected-packages
+   (quote
+    (counsel 0blayout auto-dim-other-buffers github-modern-theme alect-themes abyss-theme afternoon-theme zenburn-theme arjen-grey-theme align-cljlet helm-swoop flymake-solidity solidity-mode slack idle-highlight-mode paredit clojure-mode clojure-mode-extra-font-locking cider zoom-frm yasnippet yaml-mode unbound switch-window smartparens s paredit-menu paredit-everywhere names multiple-cursors markdown-mode magit litable key-chord inflections inf-ruby impatient-mode ido-vertical-mode ido-ubiquitous hydra helm-projectile go-errcheck go-eldoc go-direx go-autocomplete flycheck find-file-in-project etags-select emms edn editorconfig company-cider clj-mode cider-tracing cider-browse-ns bm aggressive-indent)))
  '(projectile-completion-system (quote ido))
  '(projectile-enable-caching t)
  '(projectile-file-exists-local-cache-expire 3600)
+ '(projectile-globally-ignored-directories
+   (quote
+    (".idea" ".eunit" ".git" ".hg" ".fslckout" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" "resources/public/js" "resources/public/out" "resources/public/out2" "target")))
  '(projectile-indexing-method (quote native))
  '(read-quoted-char-radix 16)
  '(revert-without-query nil)
+ '(safe-local-variable-values (quote ((eval orgtbl-mode t))))
  '(save-interprogram-paste-before-kill nil)
- '(split-height-threshold 80))
+ '(scheme-program-name "chez")
+ '(split-height-threshold 80)
+ '(visible-bell t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :background "grey" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 160 :width normal :foundry "apple" :family "Monaco"))))
+ '(auto-dim-other-buffers-face ((t (:background "gray32"))))
  '(clj-special-face ((t (:foreground "DarkOrange1" :weight bold))) t)
- '(mode-line ((((class color) (min-colors 88)) (:background "LightBlue3" :foreground "black" :box (:line-width -1 :style released-button)))))
+ '(mode-line ((t (:background "DodgerBlue3" :foreground "black" :box (:line-width -1 :style released-button)))))
  '(sh-heredoc ((t (:foreground "tan4")))))
 
 (require 'package)
@@ -164,11 +177,8 @@
 ;; (add-hook 'clojure-mode-hook #'my-clojure-mode-hook)
 
 ;; For editing in Chrome with Emacs
-(require 'edit-server)
-(edit-server-start)
-
-(require 'midnight)
-(defvar cbl/midnight/clean-buffer-list-timer (run-at-time nil 60 'clean-buffer-list)) ;; cancel-timer
+;; (require 'edit-server)
+;; (edit-server-start)
 
 (require 'dired-x)
 (require 'find-dired)
@@ -181,81 +191,26 @@
 (load "fix")
 (load "me-alpheus-ido-window-configuration.el")
 (load "key-bindings")
-;; (require 'yaml-mode)
-;; (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
-;; (add-to-list 'auto-mode-alist '("\\.html$" . html-mode))
 (add-to-list 'auto-mode-alist '("\\.clj$" . clojure-mode))
-(add-to-list 'auto-mode-alist '("\\.cljc$" . clojure-mode))
-(add-to-list 'auto-mode-alist '("\\.sol$" . javascript-mode))
-
-;; (load "~/.emacs.d/site/ido-at-point/ido-at-point.el") ;; should get from melpa
-;; (ido-at-point-mode) ;; C-M-i
-
-;; ;; multiple-cursors - https://github.com/magnars/s.el/issues/18
-;; (defun string-prefix-p (prefix str &optional ignore-case)
-;;   (let ((case-fold-search ignore-case))
-;;     (string-match-p (format "^%s" (regexp-quote prefix)) str)))
-
-;; ;; (setenv "PATH" "/Users/craigl/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin")
-;; (setenv "GOPATH" "/Users/craigl/go_appengine/gopath")
-
-
-;; ;; GOLANG
-;; (require 'auto-complete)
-;; (require 'go-autocomplete)
-;; (require 'go-eldoc)
-;; (add-hook 'go-mode-hook 'go-eldoc-setup)
-;; (add-hook 'go-mode-hook (lambda () (local-set-key (kbd "M-.") #'godef-jump)))
-;; (add-to-list 'load-path "~/.emacs.d/site/goflymake")
-;; (require 'go-flycheck)
-;; (add-hook 'after-init-hook #'global-flycheck-mode)
-
-;; (helm-mode 1)
-;; (projectile-mode 1)
+(add-to-list 'auto-mode-alist '("\\.cljc$" . clojurec-mode))
+(add-to-list 'auto-mode-alist '("\\.sol$" . solidity-mode))
 (projectile-global-mode 1)
-;; (helm-projectile-on)
 (show-paren-mode)
 (global-hi-lock-mode 1)
 
+(load "git-dired") ;; order dependency -- needs projectile
 
-;; HACK because I don't understand defadvice, apparently
-;; (defun cbl/projectile/filter-compiled-clojurescript (files)
-;;   (if (string-match-p (rx string-start "/Users/craigl/raise/src/") (projectile-project-root))
-;;       (remove-if (lambda (f)
-;; 		   (string-match-p (rx string-start "resources/public/js/") f))
-;; 		 files)
-;;     files))
-;;
-;; (defadvice projectile-current-project-files (after filter-compiled-clojurescript (files))
-;;   (cbl/projectile/filter-compiled-clojurescript files))
-(defun projectile-current-project-files ()
-  "Return a list of files for the current project."
-  (let ((files (and projectile-enable-caching
-                    (gethash (projectile-project-root) projectile-projects-cache))))
-    ;; nothing is cached
-    (unless files
-      (when projectile-enable-caching
-        (message "Empty cache. Projectile is initializing cache..."))
-      (setq files (-mapcat #'projectile-dir-files
-                           (projectile-get-project-directories)))
-      ;; cache the resulting list of files
-      (when projectile-enable-caching
-        (projectile-cache-project (projectile-project-root) files)))
 
-    (if (string-match-p (rx string-start "/Users/craigl/raise/src/") (projectile-project-root))
-      (remove-if (lambda (f)
-		   (string-match-p (rx string-start "resources/public/js/") f))
-		 (projectile-sort-files files))
-    (projectile-sort-files files))))
+;; M-x package-install <RETURN> idle-highlight-mode
+(add-hook 'clojure-mode-hook 'idle-highlight-mode)
+(defun cbl/apply-unless-point-inside-a-comment (original-function &rest args)
+  (when (not (nth 4 (syntax-ppss)))
+    (apply original-function args)))
+(advice-add 'idle-highlight-word-at-point :around #'cbl/apply-unless-point-inside-a-comment)
 
-(defun client ()
-  (interactive)
-  (insert "(require 'app-server.client)\n(in-ns 'app-server.client)"))
+(setenv "PATH"
+	"/usr/bin:/bin:/usr/sbin:/sbin:/Applications/Emacs.app/Contents/MacOS/bin-x86_64-10_9:/Applications/Emacs.app/Contents/MacOS/libexec-x86_64-10_9:/usr/local/bin")
 
-(defun client-test ()
-  (interactive)
-  (insert "(require 'app-server.client-test)\n(in-ns 'app-server.client-test)"))
 
-(defun run-client-test ()
-  (interactive)
-  (insert "(retailers-card-variants-cards-test)"))
+;;  '(cider-cljs-lein-repl
+;;    "(do (use 'figwheel-sidecar.repl-api) (load-file \"script/figwheel.clj\") #_#_(start-figwheel!) (cljs-repl))")
